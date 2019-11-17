@@ -12,6 +12,8 @@
   import TodoCreate from '@/components/TodoCreate'
   // import playground from './playground'
 
+  import store from '@/store'
+
   export default {
     name: 'app',
     components: {
@@ -21,22 +23,7 @@
     data() {
       return {
         isActive: false,
-        todos: [{
-            _id: '1',
-            title: 'Make Food',
-            description: 'Go to home and make good food'
-          },
-          {
-            _id: '2',
-            title: 'Read Book',
-            description: 'Go to library and read good food'
-          },
-          {
-            _id: '3',
-            title: 'Play Cricket',
-            description: 'Go to Playground and Play cricket'
-          },
-        ]
+        todos: store.state.todos
       }
     },
     methods: {
@@ -47,7 +34,7 @@
         this.isActive = false;
       }, */
       createTodo(todo) {
-        this.todos.push(todo)
+        store.createTodo(todo)
       }
     },
     created() {
