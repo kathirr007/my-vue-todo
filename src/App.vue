@@ -34,11 +34,13 @@
         this.isActive = false;
       }, */
       createTodo(todo) {
-        store.createTodo(todo)
+        // store.createTodo(todo)
+        store.dispatch('createTodo', todo)
       }
     },
     created() {
       // playground()
+      this.todos = store.dispatch('initStore')
     },
   }
 </script>

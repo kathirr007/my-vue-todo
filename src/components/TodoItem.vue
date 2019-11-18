@@ -13,12 +13,12 @@
         <form action="" @submit.prevent="submitForm" class="form create-todo-form">
             <div class="form-group">
                 <label for="title" class="label">Title</label>
-                <input :value="title" class="form-control" type="text">
+                <input v-model="todo.title" class="form-control" type="text">
             </div>
             <div class="form-group">
                 <label for="description" class="label">Description</label>
                 <!-- <input class="form-control" type="text" id="description"> -->
-                <textarea :value="description" name="description" class="form-control" cols="30" rows="10">
+                <textarea v-model="todo.description" name="description" class="form-control" cols="30" rows="5">
                 </textarea>
             </div>
             <button @click.prevent="editTodo" class="app-btn is-warning">Update</button>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+    import store from '@/store'
     export default {
         // props: ['title', 'description'],
         props: {
@@ -42,23 +43,34 @@
                 default: 'Default Title'
             },
             description: {
-                type: String,
+                type: String, 
                 required: false,
                 default: 'Default Description'
+            },
+            _id: {
+                type: String,
+                required: true
             }
         },
         // Array, String, Object, Function, Boolean, Undefined, Null
         data() {
             return {
-                editMode: false
+                editMode: false,
+                todo: {
+                    title: this.title,
+                    description: this.description,
+                    _id: this._id
+                }
             }
         },
         methods: {
             editTodo() {
-
+                store.dispatch('updateTodo', {...this.todo})
+                this.editMode = false
             },
             deleteTodo() {
-
+                store.dispatch('deleteTodo', this.todo._id)
+                this.editMode = false
             },
         }
     }
